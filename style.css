@@ -1,0 +1,342 @@
+:root {
+  --void: #05070d;
+  --shadow: #0b1020;
+  --spell: #8a2be2;      /* glowing Spell blue */
+  --bone: #eaecf0;       /* text */
+}
+
+body {
+  background: var(--void);
+  color: var(--bone);
+}
+
+/* hero */
+header, .hero {
+  background:
+    radial-gradient(circle at 70% 20%, rgba(80,140,255,.25), transparent 55%),
+    linear-gradient(160deg, #0a1226, var(--void));
+  border-bottom: 2px solid var(--spell);
+  box-shadow: 0 6px 30px rgba(120,180,255,.35);
+}
+
+/* photo */
+/* the portrait: same framed layout as before, Spell style */
+img {
+  display: block;
+  width: min(72vw, 320px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #8a2be2;
+  outline: 1px solid rgba(159, 208, 255, .35);
+  outline-offset: 8px;               /* second, faint frame */
+  box-shadow:
+    0 0 18px rgba(120, 180, 255, .6),
+    0 0 60px rgba(60, 120, 255, .35),
+    inset 0 0 30px rgba(0, 0, 0, .6);
+  filter: grayscale(.35) contrast(1.1) brightness(.95);
+  margin: 1.5rem 0 2rem 8px;         /* room for the outer frame */
+  animation: soul-pulse 4s ease-in-out infinite;
+}
+
+@keyframes soul-pulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(120,180,255,.5), 0 0 50px rgba(60,120,255,.3), inset 0 0 30px rgba(0,0,0,.6); }
+  50%      { box-shadow: 0 0 28px rgba(120,180,255,.9), 0 0 80px rgba(60,120,255,.5), inset 0 0 30px rgba(0,0,0,.6); }
+}
+
+/* glowing name + tagline */
+h1 {
+  color: #fff;
+  text-shadow: 0 0 12px var(--spell), 0 0 30px rgba(120,180,255,.6);
+  letter-spacing: .05em;
+}
+header p, .hero p { color: var(--spell); }
+
+/* About section */
+main, section {
+  background: var(--shadow);
+}
+h2 {
+  color: var(--spell);
+  text-shadow: 0 0 10px rgba(120,180,255,.7);
+}
+h2::before { content: "["; margin-right: .3em; }
+h2::after  { content: "]"; margin-left: .3em; }
+
+footer {
+  background: var(--void);
+  color: var(--spell);
+  border-top: 1px solid rgba(159,208,255,.4);
+}
+
+/* Spell-like flicker-in */
+h1, h2, p {
+  animation: spell-in 1.6s ease-out both;
+}
+@keyframes spell-in {
+  0%   { opacity: 0; filter: blur(6px); }
+  60%  { opacity: .6; }
+  100% { opacity: 1; filter: blur(0); }
+}
+
+#about {
+  background: #000;
+  color: #fff;
+  padding: 24px;
+  border: none;
+  border-radius: 10px;
+  max-width: 400px;
+  box-shadow: 0 0 25px #4B4BC8;
+}
+
+#about::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.open-btn,
+#about button {
+  padding: 8px 16px;
+  background: #8a2be2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.open-btn {
+  margin: 12px 0 12px 20px;
+}
+
+#about button {
+  margin-top: 12px;
+}
+
+.open-btn:hover,
+#about button:hover {
+  box-shadow: 0 0 14px #8a2be2;
+}
+
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 20px 0;
+}
+.socials a {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  color: #a855f7;
+  border: 1px solid #7c3aed;
+  border-radius: 10px;
+  transition: 0.25s;
+}
+.socials svg {
+  width: 24px;
+  height: 24px;
+}
+.socials a:hover {
+  background: #7c3aed;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.7);
+  transform: translateY(-3px);
+}
+
+#spell-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% 40%, #0a1226, #05070d 70%);
+  color: #9fd0ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  animation: loader-out 1s ease 4.6s forwards;
+}
+
+.spell-box { width: 36ch; max-width: 90vw; }
+
+.spell-line {
+  font-family: "Courier New", monospace;
+  font-size: clamp(.8rem, 3.6vw, 1.1rem);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  margin: .6rem 0;
+  text-shadow: 0 0 10px rgba(120,180,255,.9), 0 0 30px rgba(60,120,255,.5);
+  animation: type var(--t) steps(var(--n)) var(--d) forwards;
+}
+@keyframes type { to { width: calc(var(--n) * 1ch); } }
+
+.spell-bar {
+  width: min(70vw, 280px);
+  height: 2px;
+  background: rgba(159,208,255,.2);
+  box-shadow: 0 0 12px rgba(120,180,255,.5);
+}
+.spell-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #9fd0ff;
+  box-shadow: 0 0 12px #9fd0ff;
+  animation: fill 4.5s linear forwards;
+}
+@keyframes fill { to { width: 100%; } }
+
+@keyframes loader-out {
+  to { opacity: 0; filter: blur(8px); visibility: hidden; pointer-events: none; }
+}
+
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin: 0;
+  padding: 1rem 1.2rem;
+}
+
+.actions .open-btn,
+.actions .btn-resume,
+.actions .btn-gmail {
+  /* reset anything inherited from the old .open-btn rule */
+  margin: 0;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+
+  /* the compact look */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .45rem .8rem;
+  font-family: inherit;
+  font-size: .8rem;
+  line-height: 1.2;
+  text-decoration: none;
+  color: #fff;
+  background: #8b2be2;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.actions .open-btn:hover,
+.actions .btn-resume:hover,
+.actions .btn-gmail:hover {
+  box-shadow: 0 0 14px rgba(139, 43, 226, .8);
+  transform: translateY(-1px);
+}
+
+.info-section {
+  padding: 24px 20px;
+}
+.info-section h2 {
+  color: #fff;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #7c3aed;
+  text-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
+}
+
+/* Education timeline */
+.timeline {
+  border-left: 2px solid #7c3aed;
+  padding-left: 18px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 22px;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  background: #a855f7;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+}
+.timeline-item .year {
+  color: #a855f7;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.timeline-item h3 {
+  color: #fff;
+  font-size: 1.05rem;
+  margin: 4px 0;
+}
+.timeline-item p {
+  color: #b8b8d0;
+  margin: 2px 0;
+  font-size: 0.95rem;
+}
+.timeline-item .school {
+  color: #8b8bb0;
+  font-style: italic;
+}
+
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  background: #7c3aed;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  background: #a855f7;
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.7);
+  transform: translateY(-3px);
+}
+
+/* About me: plain visible section */
+#about {
+  padding: 24px 20px;
+}
+#about p {
+  line-height: 1.6;
+  color: #b8b8d0;
+}
+
+/* Popups for Education and Family */
+.info-section[popover] {
+  width: min(90vw, 460px);
+  max-height: 85vh;
+  overflow-y: auto;
+  color: var(--bone);
+  background: #000;
+  border: 1px solid #7c3aed;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 0 25px #4B4BC8;
+}
+.info-section[popover]::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+.close-btn {
+  margin-top: 16px;
+}
